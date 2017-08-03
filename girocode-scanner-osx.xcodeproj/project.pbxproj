@@ -7,16 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3DB1C8621F2BCBEE0066203D /* AccountSelectiontController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1C8611F2BCBEE0066203D /* AccountSelectiontController.swift */; };
+		3DB1C8641F2BDF2D0066203D /* AccountParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1C8631F2BDF2D0066203D /* AccountParser.swift */; };
+		3DB1C8661F2FD66B0066203D /* GradientUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1C8651F2FD66B0066203D /* GradientUtil.swift */; };
+		3DCD961A1F327DDA00A0D234 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCD96191F327DDA00A0D234 /* ContainerViewController.swift */; };
+		3DCD961C1F33CDBB00A0D234 /* GiroCodeListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCD961B1F33CDBB00A0D234 /* GiroCodeListController.swift */; };
 		3DF0B7AB1F2A053500EC04DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0B7AA1F2A053500EC04DD /* AppDelegate.swift */; };
-		3DF0B7AD1F2A053500EC04DD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0B7AC1F2A053500EC04DD /* ViewController.swift */; };
+		3DF0B7AD1F2A053500EC04DD /* ScanController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0B7AC1F2A053500EC04DD /* ScanController.swift */; };
 		3DF0B7AF1F2A053500EC04DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DF0B7AE1F2A053500EC04DD /* Assets.xcassets */; };
 		3DF0B7B21F2A053500EC04DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DF0B7B01F2A053500EC04DD /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3DB1C8611F2BCBEE0066203D /* AccountSelectiontController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountSelectiontController.swift; sourceTree = "<group>"; };
+		3DB1C8631F2BDF2D0066203D /* AccountParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountParser.swift; path = ../AccountParser.swift; sourceTree = "<group>"; };
+		3DB1C8651F2FD66B0066203D /* GradientUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientUtil.swift; sourceTree = "<group>"; };
+		3DCD96191F327DDA00A0D234 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
+		3DCD961B1F33CDBB00A0D234 /* GiroCodeListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiroCodeListController.swift; sourceTree = "<group>"; };
 		3DF0B7A71F2A053400EC04DD /* girocode-scanner-osx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "girocode-scanner-osx.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DF0B7AA1F2A053500EC04DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3DF0B7AC1F2A053500EC04DD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		3DF0B7AC1F2A053500EC04DD /* ScanController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanController.swift; sourceTree = "<group>"; };
 		3DF0B7AE1F2A053500EC04DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3DF0B7B11F2A053500EC04DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3DF0B7B31F2A053500EC04DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -52,11 +62,16 @@
 		3DF0B7A91F2A053500EC04DD /* girocode-scanner-osx */ = {
 			isa = PBXGroup;
 			children = (
+				3DB1C8631F2BDF2D0066203D /* AccountParser.swift */,
 				3DF0B7AA1F2A053500EC04DD /* AppDelegate.swift */,
-				3DF0B7AC1F2A053500EC04DD /* ViewController.swift */,
+				3DF0B7AC1F2A053500EC04DD /* ScanController.swift */,
 				3DF0B7AE1F2A053500EC04DD /* Assets.xcassets */,
 				3DF0B7B01F2A053500EC04DD /* Main.storyboard */,
 				3DF0B7B31F2A053500EC04DD /* Info.plist */,
+				3DB1C8611F2BCBEE0066203D /* AccountSelectiontController.swift */,
+				3DB1C8651F2FD66B0066203D /* GradientUtil.swift */,
+				3DCD96191F327DDA00A0D234 /* ContainerViewController.swift */,
+				3DCD961B1F33CDBB00A0D234 /* GiroCodeListController.swift */,
 			);
 			path = "girocode-scanner-osx";
 			sourceTree = "<group>";
@@ -133,7 +148,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3DF0B7AD1F2A053500EC04DD /* ViewController.swift in Sources */,
+				3DB1C8641F2BDF2D0066203D /* AccountParser.swift in Sources */,
+				3DCD961C1F33CDBB00A0D234 /* GiroCodeListController.swift in Sources */,
+				3DB1C8621F2BCBEE0066203D /* AccountSelectiontController.swift in Sources */,
+				3DB1C8661F2FD66B0066203D /* GradientUtil.swift in Sources */,
+				3DF0B7AD1F2A053500EC04DD /* ScanController.swift in Sources */,
+				3DCD961A1F327DDA00A0D234 /* ContainerViewController.swift in Sources */,
 				3DF0B7AB1F2A053500EC04DD /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -291,6 +311,7 @@
 				3DF0B7B81F2A053500EC04DD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
