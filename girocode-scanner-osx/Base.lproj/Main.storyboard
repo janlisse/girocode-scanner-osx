@@ -665,7 +665,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController showSeguePresentationStyle="single" id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="GirocodeScanner" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
@@ -688,30 +688,26 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <containerView translatesAutoresizingMaskIntoConstraints="NO" id="TcS-yD-7TJ">
-                                <rect key="frame" x="0.0" y="375" width="450" height="125"/>
+                                <rect key="frame" x="0.0" y="350" width="450" height="150"/>
                                 <connections>
-                                    <segue destination="Y0R-j7-Z5L" kind="embed" id="oux-uW-rOY"/>
+                                    <segue destination="BBQ-ta-Hva" kind="embed" id="GtF-f8-2A1"/>
                                 </connections>
                             </containerView>
-                            <containerView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zvw-d3-I7s">
-                                <rect key="frame" x="180" y="159" width="225" height="150"/>
-                                <autoresizingMask key="autoresizingMask"/>
+                            <containerView translatesAutoresizingMaskIntoConstraints="NO" id="Zvw-d3-I7s">
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="350"/>
                                 <connections>
                                     <segue destination="XfG-lQ-9wD" kind="embed" id="RYz-lk-stB"/>
                                 </connections>
                             </containerView>
-                            <containerView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ORk-pG-B7F">
-                                <rect key="frame" x="20" y="0.0" width="137" height="360"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <connections>
-                                    <segue destination="BBQ-ta-Hva" kind="embed" id="Ohn-td-AZE"/>
-                                </connections>
-                            </containerView>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="Zvw-d3-I7s" firstAttribute="width" secondItem="C6Q-jF-oqI" secondAttribute="width" id="1PB-TC-OMG"/>
+                            <constraint firstItem="Zvw-d3-I7s" firstAttribute="leading" secondItem="C6Q-jF-oqI" secondAttribute="leading" id="5py-mP-iUA"/>
                             <constraint firstAttribute="trailing" secondItem="TcS-yD-7TJ" secondAttribute="trailing" id="6MA-sX-7NF"/>
+                            <constraint firstItem="Zvw-d3-I7s" firstAttribute="top" secondItem="TcS-yD-7TJ" secondAttribute="bottom" id="YXX-ix-PQ0"/>
+                            <constraint firstItem="Zvw-d3-I7s" firstAttribute="height" secondItem="C6Q-jF-oqI" secondAttribute="height" multiplier="0.7" id="ecx-hS-AFR"/>
                             <constraint firstItem="TcS-yD-7TJ" firstAttribute="leading" secondItem="C6Q-jF-oqI" secondAttribute="leading" id="qPK-wh-Kxl"/>
-                            <constraint firstItem="TcS-yD-7TJ" firstAttribute="height" secondItem="C6Q-jF-oqI" secondAttribute="height" multiplier="0.25" id="tWQ-j1-IQr"/>
+                            <constraint firstItem="TcS-yD-7TJ" firstAttribute="height" secondItem="C6Q-jF-oqI" secondAttribute="height" multiplier="0.3" id="tWQ-j1-IQr"/>
                             <constraint firstItem="TcS-yD-7TJ" firstAttribute="top" secondItem="C6Q-jF-oqI" secondAttribute="top" id="xRh-nA-ssU"/>
                         </constraints>
                     </view>
@@ -752,7 +748,7 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ScanController" customModule="girocode_scanner_osx" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" misplaced="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="760" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="399" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HGu-vz-hA0">
@@ -775,7 +771,7 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="701" y="1011"/>
+            <point key="canvasLocation" x="520.5" y="1011"/>
         </scene>
         <!--Account Selection Controller-->
         <scene sceneID="Z2Y-2c-2S2">
