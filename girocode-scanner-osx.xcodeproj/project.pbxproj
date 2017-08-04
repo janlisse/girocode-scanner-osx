@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D498D6F1F3518B300A11911 /* MoneyMoneyApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D498D6E1F3518B300A11911 /* MoneyMoneyApi.swift */; };
 		3DB1C8621F2BCBEE0066203D /* AccountSelectiontController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1C8611F2BCBEE0066203D /* AccountSelectiontController.swift */; };
 		3DB1C8641F2BDF2D0066203D /* AccountParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1C8631F2BDF2D0066203D /* AccountParser.swift */; };
 		3DB1C8661F2FD66B0066203D /* GradientUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1C8651F2FD66B0066203D /* GradientUtil.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D498D6E1F3518B300A11911 /* MoneyMoneyApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoneyMoneyApi.swift; sourceTree = "<group>"; };
 		3DB1C8611F2BCBEE0066203D /* AccountSelectiontController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountSelectiontController.swift; sourceTree = "<group>"; };
 		3DB1C8631F2BDF2D0066203D /* AccountParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountParser.swift; path = ../AccountParser.swift; sourceTree = "<group>"; };
 		3DB1C8651F2FD66B0066203D /* GradientUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientUtil.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 				3DB1C8651F2FD66B0066203D /* GradientUtil.swift */,
 				3DCD96191F327DDA00A0D234 /* ContainerViewController.swift */,
 				3DCD961B1F33CDBB00A0D234 /* GiroCodeListController.swift */,
+				3D498D6E1F3518B300A11911 /* MoneyMoneyApi.swift */,
 			);
 			path = "girocode-scanner-osx";
 			sourceTree = "<group>";
@@ -148,6 +151,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D498D6F1F3518B300A11911 /* MoneyMoneyApi.swift in Sources */,
 				3DB1C8641F2BDF2D0066203D /* AccountParser.swift in Sources */,
 				3DCD961C1F33CDBB00A0D234 /* GiroCodeListController.swift in Sources */,
 				3DB1C8621F2BCBEE0066203D /* AccountSelectiontController.swift in Sources */,

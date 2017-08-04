@@ -701,7 +701,7 @@
                                 </connections>
                             </containerView>
                             <containerView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ORk-pG-B7F">
-                                <rect key="frame" x="20" y="0.0" width="118" height="360"/>
+                                <rect key="frame" x="20" y="0.0" width="137" height="360"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <connections>
                                     <segue destination="BBQ-ta-Hva" kind="embed" id="Ohn-td-AZE"/>
@@ -751,27 +751,31 @@
         <scene sceneID="hIz-AP-VOD">
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ScanController" customModule="girocode_scanner_osx" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="400" height="270"/>
+                    <view key="view" wantsLayer="YES" misplaced="YES" id="m2S-Jp-Qdl">
+                        <rect key="frame" x="0.0" y="0.0" width="760" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HGu-vz-hA0">
-                                <rect key="frame" x="118" y="118" width="164" height="32"/>
+                                <rect key="frame" x="14" y="222" width="164" height="32"/>
                                 <buttonCell key="cell" type="push" bezelStyle="rounded" image="camera" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="agw-vk-p5S">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="captureButton:" target="XfG-lQ-9wD" id="NSK-XG-mMW"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="HGu-vz-hA0" firstAttribute="centerY" secondItem="m2S-Jp-Qdl" secondAttribute="centerY" id="CJU-WN-zkG"/>
-                            <constraint firstItem="HGu-vz-hA0" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="ion-iu-phI"/>
+                            <constraint firstItem="HGu-vz-hA0" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="7rz-1E-qGj"/>
+                            <constraint firstItem="HGu-vz-hA0" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="BCb-fS-CLu"/>
+                            <constraint firstItem="HGu-vz-hA0" firstAttribute="width" secondItem="m2S-Jp-Qdl" secondAttribute="width" multiplier="0.2" id="RBs-fs-JcV"/>
                         </constraints>
                     </view>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="658" y="862"/>
+            <point key="canvasLocation" x="701" y="1011"/>
         </scene>
         <!--Account Selection Controller-->
         <scene sceneID="Z2Y-2c-2S2">

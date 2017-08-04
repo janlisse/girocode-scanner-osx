@@ -7,14 +7,32 @@ class ScanController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
     var videoPreviewLayer:AVCaptureVideoPreviewLayer?
     var qrCodeFrameView:CALayer?
     var scanResult: Dictionary<String, String>?
-    var lastTime : DispatchTime?
-    var sourceIban : String?
+    var giroCodeScannerDelegate: GiroCodeScannerDelegate?
+    var isCapturing = false
     
     let detector: CIDetector = CIDetector(ofType: CIDetectorTypeQRCode, context:nil, options:nil)!
     
+    @IBAction func captureButton(_ sender: Any) {
+        if (isCapturing) {
+            stopCapturing()
+        } else {
+            startCapturing()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.wantsLayer = true
+        let renderLayer = CALayer()
+        view.wantsLayer = true   // layer is a NSView
+        view.layer = renderLayer
+        //self.view.layer?.borderWidth = 6.0
+        //self.view.layer?.borderColor = CGColor.black
+    }
+    
+    func stopCapturing() {
+        captureSession?.stopRunning()
+        videoPreviewLayer?.removeFromSuperlayer()
+        isCapturing = false
     }
     
     func startCapturing() {
@@ -39,15 +57,13 @@ class ScanController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
             // Initialize the video preview layer and add it as a sublayer to the viewPreview view's layer.
             videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
             videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
-            
-            let renderLayer = CALayer()
-            view.wantsLayer = true   // layer is a NSView
-            view.layer = renderLayer
             videoPreviewLayer?.frame = view.bounds
-            view.layer?.addSublayer(videoPreviewLayer!)
+            view.layer?.insertSublayer(videoPreviewLayer!, at:0)
             
             // Start video capture.
             captureSession?.startRunning()
+            
+            isCapturing = true
             
             // Initialize QR Code Frame to highlight the QR code
             qrCodeFrameView = CALayer()
@@ -55,7 +71,7 @@ class ScanController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
             if let qrCodeFrameView = qrCodeFrameView {
                 qrCodeFrameView.borderColor = NSColor.green.cgColor
                 qrCodeFrameView.borderWidth = 4
-                view.layer?.addSublayer(qrCodeFrameView)
+                view.layer?.insertSublayer(qrCodeFrameView, above: videoPreviewLayer)
             }
         } catch {
             print(error)
@@ -74,8 +90,8 @@ class ScanController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
         let ciimg: CIImage = CIImage(cvImageBuffer: imageBuf)
         let features = detector.features(in: ciimg)
         for qrCodeFeature in features as! [CIQRCodeFeature] {
+            stopCapturing()
             qrCodeFrameView?.frame = qrCodeFeature.bounds
-            captureSession?.stopRunning()
             print("QR code detected")
             print(qrCodeFeature.messageString!)
             let lines = qrCodeFeature.messageString!.components(separatedBy: "\n")
@@ -85,36 +101,26 @@ class ScanController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
             let purpose = (lines.indices.contains(10)) ? lines[10] : ""
             let index = amountStr.index(amountStr.startIndex, offsetBy: 3)
             let amount = Double(amountStr.substring(from: index))!
-            callInvoiceScript(sourceIban: sourceIban!, recipientName: recipient, recipientIban: iban, amount: amount, purpose: purpose)
+            let giroCode = GiroCode(recipientName : recipient, recipientIban : iban, amount: amount, purpose: purpose)
+            giroCodeScannerDelegate?.giroCodeScanned(giroCode: giroCode)
         }
     }
     
-    func callInvoiceScript(sourceIban: String, recipientName: String, recipientIban: String, amount: Double, purpose: String) {
-        let line1 = "tell application \"MoneyMoney\"\n"
-        let line2 = "  create bank transfer from account \"\(sourceIban)\" to \"\(recipientName)\" iban \"\(recipientIban)\" amount \(amount) purpose \"\(purpose)\"\n"
-        let line3 = "end tell\n"
-        let script = line1+line2+line3
-        var error: NSDictionary?
-        print(script)
-        let scriptObject = NSAppleScript(source: script)
-        _ = scriptObject!.executeAndReturnError(&error)
-        if let error = error {
-            print(error)
-        } else {
-            print("Successfully sent invoice")
-        }
-    }
-
-
-
     override var representedObject: Any? {
         didSet {
         // Update the view, if already loaded.
         }
     }
-    
-    
+}
 
+struct GiroCode {
+    let recipientName: String
+    let recipientIban: String
+    let amount: Double
+    let purpose: String?
+}
 
+protocol GiroCodeScannerDelegate {
+    func giroCodeScanned(giroCode: GiroCode)
 }
 
