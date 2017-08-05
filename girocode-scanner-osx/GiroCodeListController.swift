@@ -18,6 +18,12 @@ class GiroCodeListController : NSViewController {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        NotificationCenter.default.addObserver(forName: ScanController.notificationName, object: nil, queue: nil){
+            notification in
+            let giroCode = notification.userInfo?["giroCode"] as! GiroCode
+            self.giroCodes.append(giroCode)
+            self.tableView.reloadData()
+        }
     }
     
     override var representedObject: Any? {

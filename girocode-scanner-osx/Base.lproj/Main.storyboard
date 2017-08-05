@@ -834,6 +834,9 @@
                             <constraint firstItem="HGu-vz-hA0" firstAttribute="width" secondItem="m2S-Jp-Qdl" secondAttribute="width" multiplier="0.2" id="RBs-fs-JcV"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="captureButton" destination="HGu-vz-hA0" id="RQo-hM-nd4"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
