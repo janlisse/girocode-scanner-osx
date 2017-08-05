@@ -101,7 +101,7 @@ class ScanController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
             let purpose = (lines.indices.contains(10)) ? lines[10] : ""
             let index = amountStr.index(amountStr.startIndex, offsetBy: 3)
             let amount = Double(amountStr.substring(from: index))!
-            let giroCode = GiroCode(recipientName : recipient, recipientIban : iban, amount: amount, purpose: purpose)
+            let giroCode = GiroCode(recipientName : recipient, recipientIban : iban, amount: amount, purpose: purpose, wasSent: false)
             giroCodeScannerDelegate?.giroCodeScanned(giroCode: giroCode)
         }
     }
@@ -118,6 +118,7 @@ struct GiroCode {
     let recipientIban: String
     let amount: Double
     let purpose: String?
+    let wasSent: Bool
 }
 
 protocol GiroCodeScannerDelegate {
