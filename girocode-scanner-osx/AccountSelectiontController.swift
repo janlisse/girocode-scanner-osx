@@ -20,7 +20,7 @@ class AccountSelectionController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         GradientUtil.setGradientGreenBlue(view : self.view)
-        let accounts = MoneyMonpeyApi.callReadAccountsScript()
+        let accounts = MoneyMoneyApi.callReadAccountsScript()
         accountsList.addItems(withTitles: Array(accounts.keys))
         //TODO handle error
         //errorMsgLabel.stringValue = "Error: \(error.value(forKey: "NSAppleScriptErrorBriefMessage") as! String)"

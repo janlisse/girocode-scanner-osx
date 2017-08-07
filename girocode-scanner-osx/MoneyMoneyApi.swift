@@ -2,21 +2,18 @@
 
 import Foundation
 
-class MoneyMonpeyApi {
+class MoneyMoneyApi {
     
-    static func callInvoiceScript(sourceIban: String, recipientName: String, recipientIban: String, amount: Double, purpose: String) {
+    static func callInvoiceScript(sourceIban: String, giroCode: GiroCode) {
         let line1 = "tell application \"MoneyMoney\"\n"
-        let line2 = "  create bank transfer from account \"\(sourceIban)\" to \"\(recipientName)\" iban \"\(recipientIban)\" amount \(amount) purpose \"\(purpose)\"\n"
+        let line2 = "  create bank transfer from account \"\(sourceIban)\" to \"\(giroCode.recipientName)\" iban \"\(giroCode.recipientIban)\" amount \(giroCode.amount) purpose \"\(giroCode.purpose ?? "")\"\n"
         let line3 = "end tell\n"
         let script = line1+line2+line3
         var error: NSDictionary?
-        print(script)
         let scriptObject = NSAppleScript(source: script)
         _ = scriptObject!.executeAndReturnError(&error)
         if let error = error {
             print(error)
-        } else {
-            print("Successfully sent invoice")
         }
     }
     

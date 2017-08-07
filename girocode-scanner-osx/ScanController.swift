@@ -94,7 +94,33 @@ struct GiroCode {
     let recipientIban: String
     let amount: Double
     let purpose: String?
-    let wasSent: Bool
+    var wasSent: Bool
+    
+}
+
+extension GiroCode {
+    init?(fromString: String) {
+        let lines = fromString.components(separatedBy: "\n")
+        if let serviceTag = lines[safe: 0], serviceTag == "BCD",  let recipient = lines[safe: 5],
+            let iban = lines[safe: 6], let amountStr =   lines[safe: 7] {
+            self.amount = 20.00
+            self.recipientIban = iban
+            self.recipientName = recipient
+            self.purpose = ""
+            self.wasSent = true
+        } else {
+            return nil
+        }
+
+    }
+}
+
+extension Collection where Indices.Iterator.Element == Index {
+    
+    /// Returns the element at the specified index iff it is within bounds, otherwise nil.
+    subscript (safe index: Index) -> Generator.Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
 }
 
 
@@ -108,14 +134,13 @@ extension ScanController: AVCaptureVideoDataOutputSampleBufferDelegate {
             qrCodeFrameView?.frame = qrCodeFeature.bounds
             stopCapturing()
             captureButton.setNextState()
-            let lines = qrCodeFeature.messageString!.components(separatedBy: "\n")
-            let recipient = (lines.indices.contains(5)) ? lines[5] : "Empfänger"
-            let iban = (lines.indices.contains(6)) ? lines[6] : "DefaultIBAN"
-            let amountStr = (lines.indices.contains(7)) ? lines[7] : "Default"
-            let purpose = (lines.indices.contains(10)) ? lines[10] : ""
-            let index = amountStr.index(amountStr.startIndex, offsetBy: 3)
-            let amount = Double(amountStr.substring(from: index))!
-            let giroCode = GiroCode(recipientName : recipient, recipientIban : iban, amount: amount, purpose: purpose, wasSent: false)
+            //let recipient = (lines.indices.contains(5)) ? lines[5] : "Empfänger"
+            //let iban = (lines.indices.contains(6)) ? lines[6] : "DefaultIBAN"
+            //let amountStr = (lines.indices.contains(7)) ? lines[7] : "Default"
+            //let purpose = (lines.indices.contains(10)) ? lines[10] : ""
+            //let index = amountStr.index(amountStr.startIndex, offsetBy: 3)
+            //let amount = Double(amountStr.substring(from: index))!
+            let giroCode = GiroCode(fromString: qrCodeFeature.messageString!)
             NotificationCenter.default.post(name: ScanController.notificationName, object: nil, userInfo: ["giroCode": giroCode])
         }
     }
