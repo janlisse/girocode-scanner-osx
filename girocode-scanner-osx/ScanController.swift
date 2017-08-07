@@ -31,9 +31,11 @@ class ScanController: NSViewController {
         captureSession?.stopRunning()
         videoPreviewLayer?.removeFromSuperlayer()
         isCapturing = false
+        captureButton.title = "Start"
     }
     
     func startCapturing() {
+        captureButton.title = "Stop"
         let captureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
         
         do {

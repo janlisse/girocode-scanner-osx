@@ -2,9 +2,15 @@
 
 import Foundation
 
+enum MoneyMoneyError: Error {
+    case DatabaseLocked
+    case Other(reason: String)
+}
+
+
 class MoneyMoneyApi {
     
-    static func callInvoiceScript(sourceIban: String, giroCode: GiroCode) {
+    static func callInvoiceScript(sourceIban: String, giroCode: GiroCode) throws {
         let line1 = "tell application \"MoneyMoney\"\n"
         let line2 = "  create bank transfer from account \"\(sourceIban)\" to \"\(giroCode.recipientName)\" iban \"\(giroCode.recipientIban)\" amount \(giroCode.amount) purpose \"\(giroCode.purpose ?? "")\"\n"
         let line3 = "end tell\n"
@@ -13,11 +19,11 @@ class MoneyMoneyApi {
         let scriptObject = NSAppleScript(source: script)
         _ = scriptObject!.executeAndReturnError(&error)
         if let error = error {
-            print(error)
+            throw moneyMoneyError(error)
         }
     }
     
-    static func callReadAccountsScript() -> [String : String] {
+    static func callReadAccountsScript() throws -> [Account] {
         let line1 = "tell application \"MoneyMoney\"\n"
         let line2 = "  export accounts\n"
         let line3 = "end tell\n"
@@ -26,10 +32,19 @@ class MoneyMoneyApi {
         let scriptObject = NSAppleScript(source: script)
         let result = scriptObject!.executeAndReturnError(&error)
         if let error = error {
-            print(error)
-            return [:]
+            throw moneyMoneyError(error)
+        } else {
+            let parser = AccountParser()
+            return parser.parse(data: result.data)
         }
-        let parser = AccountParser()
-        return parser.parse(data: result.data)
+    }
+    
+    static func moneyMoneyError(_ error: NSDictionary) -> MoneyMoneyError {
+        let errorMsg = error["NSAppleScriptErrorMessage"] as! String
+        if (errorMsg == "MoneyMoney got an error: Locked database.") {
+            return MoneyMoneyError.DatabaseLocked
+        } else {
+            return MoneyMoneyError.Other(reason: errorMsg)
+        }
     }
 }

@@ -14,17 +14,27 @@ class GiroCodeListController : NSViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        let accounts = MoneyMoneyApi.callReadAccountsScript()
-        accountSelection.addItems(withTitles: Array(accounts.keys))
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.target = self
-        tableView.doubleAction = #selector(tableViewDoubleClick(_:))
-        NotificationCenter.default.addObserver(forName: ScanController.notificationName, object: nil, queue: nil){
-            notification in
-            let giroCode = notification.userInfo?["giroCode"] as! GiroCode
-            self.giroCodes.append(giroCode)
-            self.tableView.reloadData()
+        
+        do {
+         let accounts = try MoneyMoneyApi.callReadAccountsScript()
+            accountSelection.addItems(withTitles: Array(accounts.map{ a in a.name}))
+            tableView.delegate = self
+            tableView.dataSource = self
+            tableView.target = self
+            tableView.doubleAction = #selector(tableViewDoubleClick(_:))
+            NotificationCenter.default.addObserver(forName: ScanController.notificationName, object: nil, queue: nil){
+                notification in
+                let giroCode = notification.userInfo?["giroCode"] as! GiroCode
+                self.giroCodes.append(giroCode)
+                self.tableView.reloadData()
+            }
+
+        }
+        catch MoneyMoneyError.DatabaseLocked {
+            print("Please unlock MoneyMoney DB.")
+        }
+        catch {
+            print("Other error")
         }
     }
     
@@ -40,12 +50,19 @@ class GiroCodeListController : NSViewController {
             let giroCode = giroCodes[tableView.selectedRow]
             if let account = accountSelection.titleOfSelectedItem {
                 if (!giroCode.wasSent) {
-                    MoneyMoneyApi.callInvoiceScript(sourceIban: account, giroCode: giroCode)
-                    giroCodes[tableView.selectedRow].wasSent = true
-                    self.tableView.reloadData()
+                    do {
+                        try MoneyMoneyApi.callInvoiceScript(sourceIban: account, giroCode: giroCode)
+                        giroCodes[tableView.selectedRow].wasSent = true
+                        self.tableView.reloadData()
+                    }
+                    catch MoneyMoneyError.DatabaseLocked {
+                        print("Please unlock MoneyMoney DB.")
+                    }
+                    catch {
+                        print("Other error")
+                    }
                 }
             }
-
         }
     }
 }

@@ -679,10 +679,10 @@
             </objects>
             <point key="canvasLocation" x="41" y="451"/>
         </scene>
-        <!--Container View Controller-->
+        <!--View Controller-->
         <scene sceneID="kWs-V9-Vry">
             <objects>
-                <viewController storyboardIdentifier="containerViewController" id="DAb-iK-y4D" customClass="ContainerViewController" customModule="girocode_scanner_osx" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="containerViewController" id="DAb-iK-y4D" sceneMemberID="viewController">
                     <view key="view" id="C6Q-jF-oqI">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="500"/>
                         <autoresizingMask key="autoresizingMask"/>

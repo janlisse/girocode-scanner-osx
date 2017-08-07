@@ -2,6 +2,10 @@
 
 import Foundation
 
+struct Account {
+    let name: String
+    let number: String
+}
 
 class AccountParser: NSObject, XMLParserDelegate {
     
@@ -9,10 +13,10 @@ class AccountParser: NSObject, XMLParserDelegate {
     var currentKey: String?
     var lastAccountNumber: String?
     var lastName: String?
-    var accounts: [String : String] = [:]
+    var accounts: [Account] = []
     
     
-    func parse(data: Data) -> [String : String] {
+    func parse(data: Data) -> [Account] {
         let parser = XMLParser(data: data)
         parser.delegate = self
         parser.parse()
@@ -36,7 +40,7 @@ class AccountParser: NSObject, XMLParserDelegate {
         if (currentElement == "string" && currentKey == "name" && !trimmed.isEmpty) {
             lastName = trimmed
             if let lastAccountNumber = lastAccountNumber {
-                accounts[trimmed] = lastAccountNumber
+                accounts.append(Account(name: trimmed, number: lastAccountNumber))
             }
         }
     }
