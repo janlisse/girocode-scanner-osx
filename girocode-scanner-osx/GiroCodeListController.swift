@@ -9,11 +9,21 @@ class GiroCodeListController : NSViewController {
     var giroCodes = [GiroCode]()
     let checkmarkImage = Bundle.main.image(forResource: "checkmark")
     
+    @IBOutlet weak var splitView: NSSplitView!
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var accountSelection: NSPopUpButton!
-        
+    @IBOutlet weak var accountLabel: NSTextField!
+    @IBOutlet weak var accountSelectionView: NSView!
+    @IBOutlet weak var errorView: NSView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        let renderLayer = CALayer()
+        view.wantsLayer = true
+        view.layer = renderLayer
+        errorView.isHidden = true
+        splitView.delegate = self
+        splitView.adjustSubviews()
         
         do {
          let accounts = try MoneyMoneyApi.callReadAccountsScript()
@@ -31,10 +41,10 @@ class GiroCodeListController : NSViewController {
 
         }
         catch MoneyMoneyError.DatabaseLocked {
-            print("Please unlock MoneyMoney DB.")
+            showError(msg: "Error: Please unlock MoneyMoney DB.")
         }
         catch {
-            print("Other error")
+            showError(msg: "Other error")
         }
     }
     
@@ -42,6 +52,13 @@ class GiroCodeListController : NSViewController {
         didSet {
             // Update the view, if already loaded.
         }
+    }
+    
+    func showError(msg: String) {
+        accountSelectionView.isHidden = true
+        errorView.isHidden = false
+        splitView.adjustSubviews()
+        
     }
     
     func tableViewDoubleClick(_ sender:AnyObject) {
@@ -94,4 +111,21 @@ extension GiroCodeListController: NSTableViewDelegate {
         }
         return nil
     }
+}
+
+
+extension GiroCodeListController: NSSplitViewDelegate {
+    
+    func splitView(_ splitView: NSSplitView,
+                   shouldHideDividerAt dividerIndex: Int)-> Bool {
+        return true
+    }
+    
+    func splitView(_ splitView: NSSplitView,
+                   effectiveRect proposedEffectiveRect: NSRect,
+                   forDrawnRect drawnRect: NSRect,
+                   ofDividerAt dividerIndex: Int) -> NSRect{
+        return NSRect.init()
+    }
+    
 }
