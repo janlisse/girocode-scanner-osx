@@ -104,18 +104,25 @@ extension GiroCode {
     init?(fromString: String) {
         let lines = fromString.components(separatedBy: "\n")
         if let serviceTag = lines[safe: 0], serviceTag == "BCD",  let recipient = lines[safe: 5],
-            let iban = lines[safe: 6], let amountStr =   lines[safe: 7] {
-            let index = amountStr.index(amountStr.startIndex, offsetBy: 3)
-            let amount = Double(amountStr.substring(from: index))!
+            let iban = lines[safe: 6], let amount = GiroCode.parseAmount(s: lines[safe: 7]),
+            let purpose = lines[safe: 7] {
             self.amount = amount
             self.recipientIban = iban
             self.recipientName = recipient
-            self.purpose = ""
+            self.purpose = purpose
             self.wasSent = true
         } else {
             return nil
         }
-
+    }
+    
+    static func parseAmount(s: String?) -> Double? {
+        if let amountStr = s, amountStr.characters.count > 4 {
+            let index = amountStr.index(amountStr.startIndex, offsetBy: 3)
+            return Double(amountStr.substring(from: index))
+        } else {
+            return nil
+        }
     }
 }
 
