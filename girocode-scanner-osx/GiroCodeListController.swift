@@ -8,6 +8,7 @@ class GiroCodeListController : NSViewController {
     
     var giroCodes = [GiroCode]()
     let checkmarkImage = Bundle.main.image(forResource: "checkmark")
+    let successSound = NSSound(named: "success")
     
     @IBOutlet weak var splitView: NSSplitView!
     @IBOutlet weak var tableView: NSTableView!
@@ -75,21 +76,14 @@ class GiroCodeListController : NSViewController {
     }
     
     func tableViewDoubleClick(_ sender:AnyObject) {
-        
         if tableView.selectedRow >= 0 {
             let giroCode = giroCodes[tableView.selectedRow]
             if let account = accountSelection.titleOfSelectedItem {
                 if (!giroCode.wasSent) {
-                    do {
-                        try MoneyMoneyApi.sentInvoice(sourceIban: account, giroCode: giroCode)
+                    if (try? MoneyMoneyApi.sentInvoice(sourceIban: account, giroCode: giroCode)) != nil {
                         giroCodes[tableView.selectedRow].wasSent = true
                         self.tableView.reloadData()
-                    }
-                    catch MoneyMoneyError.DatabaseLocked {
-                        print("Please unlock MoneyMoney DB.")
-                    }
-                    catch {
-                        print("Other error")
+                        successSound?.play()
                     }
                 }
             }

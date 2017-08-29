@@ -12,6 +12,7 @@ class ScanController: NSViewController {
     var qrCodeFrameView:CALayer?
     var isCapturing = false
     let detector: CIDetector = CIDetector(ofType: CIDetectorTypeQRCode, context:nil, options:nil)!
+    let successSound = NSSound(named: "camera")
     let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "capturing")
     
     @IBAction func captureButton(_ sender: Any) {
@@ -105,12 +106,12 @@ extension GiroCode {
         let lines = fromString.components(separatedBy: "\n")
         if let serviceTag = lines[safe: 0], serviceTag == "BCD",  let recipient = lines[safe: 5],
             let iban = lines[safe: 6], let amount = GiroCode.parseAmount(s: lines[safe: 7]),
-            let purpose = lines[safe: 7] {
+            let purpose = lines[safe: 10] {
             self.amount = amount
             self.recipientIban = iban
             self.recipientName = recipient
             self.purpose = purpose
-            self.wasSent = true
+            self.wasSent = false
         } else {
             return nil
         }
@@ -147,6 +148,7 @@ extension ScanController: AVCaptureVideoDataOutputSampleBufferDelegate {
                 stopCapturing()
                 captureButton.setNextState()
                 NotificationCenter.default.post(name: ScanController.notificationName, object: nil, userInfo: ["giroCode": giroCode])
+                successSound?.play()
             }
         }
     }
