@@ -760,15 +760,15 @@
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Q3-I2-Plr">
-                                                <rect key="frame" x="36" y="8" width="109" height="17"/>
-                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Error: DB locked" id="XYh-Hz-jo6">
+                                                <rect key="frame" x="36" y="8" width="37" height="17"/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Error" id="XYh-Hz-jo6">
                                                     <font key="font" metaFont="systemBold"/>
                                                     <color key="textColor" red="1" green="0.0" blue="0.0" alpha="0.90443065068493156" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DL0-vM-h1b">
-                                                <rect key="frame" x="157" y="0.0" width="73" height="32"/>
+                                                <rect key="frame" x="85" y="0.0" width="73" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Retry" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Sic-fk-NDy">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -886,8 +886,8 @@
                     <connections>
                         <outlet property="accountSelection" destination="UA6-Vl-koD" id="UtR-ux-UVJ"/>
                         <outlet property="accountSelectionView" destination="AKl-QI-wrV" id="ztj-QB-HjB"/>
+                        <outlet property="errorLabel" destination="2Q3-I2-Plr" id="ZZI-xf-0Pz"/>
                         <outlet property="errorView" destination="eBO-gX-IId" id="Yjt-Lm-UYF"/>
-                        <outlet property="retryButton" destination="DL0-vM-h1b" id="FMu-ht-FwP"/>
                         <outlet property="splitView" destination="HnV-dB-OYk" id="oqf-BO-JJv"/>
                         <outlet property="tableView" destination="MUc-nB-dnY" id="zot-Qk-aiQ"/>
                     </connections>

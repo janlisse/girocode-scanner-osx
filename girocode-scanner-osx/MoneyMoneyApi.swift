@@ -4,6 +4,7 @@ import Foundation
 
 enum MoneyMoneyError: Error {
     case DatabaseLocked
+    case NotFound
     case Other(reason: String)
 }
 
@@ -43,7 +44,11 @@ class MoneyMoneyApi {
         let errorMsg = error["NSAppleScriptErrorMessage"] as! String
         if (errorMsg == "MoneyMoney got an error: Locked database.") {
             return MoneyMoneyError.DatabaseLocked
-        } else {
+        }
+        else if (errorMsg == "Expected end of line but found identifier.") {
+            return MoneyMoneyError.NotFound
+        }
+        else {
             return MoneyMoneyError.Other(reason: errorMsg)
         }
     }

@@ -12,10 +12,9 @@ class GiroCodeListController : NSViewController {
     @IBOutlet weak var splitView: NSSplitView!
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var accountSelection: NSPopUpButton!
-    @IBOutlet weak var accountLabel: NSTextField!
     @IBOutlet weak var accountSelectionView: NSView!
     @IBOutlet weak var errorView: NSView!
-    
+    @IBOutlet weak var errorLabel: NSTextField!
     @IBAction func retryButtonClicked(_ sender: Any) {
         loadAccounts()
     }
@@ -53,12 +52,19 @@ class GiroCodeListController : NSViewController {
         catch MoneyMoneyError.DatabaseLocked {
             showError(msg: "Error: Please unlock MoneyMoney DB.")
         }
+        catch MoneyMoneyError.NotFound {
+            showError(msg: "Error: MoneyMoney not found.")
+        }
+        catch MoneyMoneyError.Other(let reason){
+            showError(msg: reason)
+        }
         catch {
-            showError(msg: "Other error")
+            showError(msg: "Unknown error")
         }
     }
     
     private func showError(msg: String) {
+        errorLabel.stringValue = msg
         toggleSplitView(showError: true)
     }
     
