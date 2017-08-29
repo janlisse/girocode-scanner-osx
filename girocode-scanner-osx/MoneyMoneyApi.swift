@@ -10,7 +10,7 @@ enum MoneyMoneyError: Error {
 
 class MoneyMoneyApi {
     
-    static func callInvoiceScript(sourceIban: String, giroCode: GiroCode) throws {
+    static func sentInvoice(sourceIban: String, giroCode: GiroCode) throws {
         let line1 = "tell application \"MoneyMoney\"\n"
         let line2 = "  create bank transfer from account \"\(sourceIban)\" to \"\(giroCode.recipientName)\" iban \"\(giroCode.recipientIban)\" amount \(giroCode.amount) purpose \"\(giroCode.purpose ?? "")\"\n"
         let line3 = "end tell\n"
@@ -23,7 +23,7 @@ class MoneyMoneyApi {
         }
     }
     
-    static func callReadAccountsScript() throws -> [Account] {
+    static func getAccounts() throws -> [Account] {
         let line1 = "tell application \"MoneyMoney\"\n"
         let line2 = "  export accounts\n"
         let line3 = "end tell\n"

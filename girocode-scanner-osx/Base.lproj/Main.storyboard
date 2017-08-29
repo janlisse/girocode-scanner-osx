@@ -760,22 +760,38 @@
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Q3-I2-Plr">
-                                                <rect key="frame" x="48" y="8" width="109" height="17"/>
+                                                <rect key="frame" x="36" y="8" width="109" height="17"/>
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Error: DB locked" id="XYh-Hz-jo6">
                                                     <font key="font" metaFont="systemBold"/>
                                                     <color key="textColor" red="1" green="0.0" blue="0.0" alpha="0.90443065068493156" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DL0-vM-h1b">
+                                                <rect key="frame" x="157" y="0.0" width="73" height="32"/>
+                                                <buttonCell key="cell" type="push" title="Retry" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Sic-fk-NDy">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="retryButtonClicked:" target="BBQ-ta-Hva" id="EWM-P5-exw"/>
+                                                </connections>
+                                            </button>
                                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="a0U-NQ-Wj4">
-                                                <rect key="frame" x="8" y="1" width="32" height="32"/>
+                                                <rect key="frame" x="8" y="7" width="20" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="20" id="96d-RH-3At"/>
+                                                    <constraint firstAttribute="height" constant="20" id="eAl-9W-waY"/>
+                                                </constraints>
                                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="error" id="wex-Kv-XaK"/>
                                             </imageView>
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="a0U-NQ-Wj4" firstAttribute="centerY" secondItem="eBO-gX-IId" secondAttribute="centerY" id="R5j-XQ-387"/>
                                             <constraint firstItem="2Q3-I2-Plr" firstAttribute="leading" secondItem="a0U-NQ-Wj4" secondAttribute="trailing" constant="10" id="ZCL-pP-KsL"/>
+                                            <constraint firstItem="DL0-vM-h1b" firstAttribute="leading" secondItem="2Q3-I2-Plr" secondAttribute="trailing" constant="20" id="m6h-Hq-Or7"/>
                                             <constraint firstItem="2Q3-I2-Plr" firstAttribute="centerY" secondItem="a0U-NQ-Wj4" secondAttribute="centerY" id="oaD-Gr-DaX"/>
+                                            <constraint firstItem="DL0-vM-h1b" firstAttribute="centerY" secondItem="eBO-gX-IId" secondAttribute="centerY" id="qqA-ct-TB9"/>
                                         </constraints>
                                     </customView>
                                     <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="umj-43-Rck">
@@ -871,6 +887,7 @@
                         <outlet property="accountSelection" destination="UA6-Vl-koD" id="UtR-ux-UVJ"/>
                         <outlet property="accountSelectionView" destination="AKl-QI-wrV" id="ztj-QB-HjB"/>
                         <outlet property="errorView" destination="eBO-gX-IId" id="Yjt-Lm-UYF"/>
+                        <outlet property="retryButton" destination="DL0-vM-h1b" id="FMu-ht-FwP"/>
                         <outlet property="splitView" destination="HnV-dB-OYk" id="oqf-BO-JJv"/>
                         <outlet property="tableView" destination="MUc-nB-dnY" id="zot-Qk-aiQ"/>
                     </connections>

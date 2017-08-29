@@ -16,29 +16,39 @@ class GiroCodeListController : NSViewController {
     @IBOutlet weak var accountSelectionView: NSView!
     @IBOutlet weak var errorView: NSView!
     
+    @IBAction func retryButtonClicked(_ sender: Any) {
+        loadAccounts()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let renderLayer = CALayer()
-        view.wantsLayer = true
-        view.layer = renderLayer
-        errorView.isHidden = true
         splitView.delegate = self
-        splitView.adjustSubviews()
-        
-        do {
-         let accounts = try MoneyMoneyApi.callReadAccountsScript()
-            accountSelection.addItems(withTitles: Array(accounts.map{ a in a.name}))
-            tableView.delegate = self
-            tableView.dataSource = self
-            tableView.target = self
-            tableView.doubleAction = #selector(tableViewDoubleClick(_:))
-            NotificationCenter.default.addObserver(forName: ScanController.notificationName, object: nil, queue: nil){
-                notification in
-                let giroCode = notification.userInfo?["giroCode"] as! GiroCode
-                self.giroCodes.append(giroCode)
-                self.tableView.reloadData()
-            }
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.target = self
+        tableView.doubleAction = #selector(tableViewDoubleClick(_:))
+        NotificationCenter.default.addObserver(forName: ScanController.notificationName, object: nil, queue: nil){
+            notification in
+            let giroCode = notification.userInfo?["giroCode"] as! GiroCode
+            self.giroCodes.append(giroCode)
+            self.tableView.reloadData()
+        }
+        loadAccounts()
 
+    }
+    
+    override var representedObject: Any? {
+        didSet {
+            // Update the view, if already loaded.
+        }
+    }
+    
+    private func loadAccounts() {
+        do {
+            let accounts = try MoneyMoneyApi.getAccounts()
+            accountSelection.addItems(withTitles: Array(accounts.map{ a in a.name}))
+            toggleSplitView(showError: false)
+            
         }
         catch MoneyMoneyError.DatabaseLocked {
             showError(msg: "Error: Please unlock MoneyMoney DB.")
@@ -48,17 +58,14 @@ class GiroCodeListController : NSViewController {
         }
     }
     
-    override var representedObject: Any? {
-        didSet {
-            // Update the view, if already loaded.
-        }
+    private func showError(msg: String) {
+        toggleSplitView(showError: true)
     }
     
-    func showError(msg: String) {
-        accountSelectionView.isHidden = true
-        errorView.isHidden = false
+    private func toggleSplitView(showError: Bool) {
+        accountSelectionView.isHidden = showError
+        errorView.isHidden = !showError
         splitView.adjustSubviews()
-        
     }
     
     func tableViewDoubleClick(_ sender:AnyObject) {
@@ -68,7 +75,7 @@ class GiroCodeListController : NSViewController {
             if let account = accountSelection.titleOfSelectedItem {
                 if (!giroCode.wasSent) {
                     do {
-                        try MoneyMoneyApi.callInvoiceScript(sourceIban: account, giroCode: giroCode)
+                        try MoneyMoneyApi.sentInvoice(sourceIban: account, giroCode: giroCode)
                         giroCodes[tableView.selectedRow].wasSent = true
                         self.tableView.reloadData()
                     }
