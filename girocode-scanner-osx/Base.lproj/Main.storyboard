@@ -887,9 +887,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="450" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HGu-vz-hA0">
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HGu-vz-hA0">
                                 <rect key="frame" x="14" y="222" width="100" height="32"/>
-                                <buttonCell key="cell" type="push" title="Start" bezelStyle="rounded" image="camera" imagePosition="right" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="agw-vk-p5S">
+                                <buttonCell key="cell" type="push" bezelStyle="rounded" image="webcam" imagePosition="only" alignment="left" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="agw-vk-p5S">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -914,7 +914,7 @@
     </scenes>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>
-        <image name="camera" width="128" height="128"/>
         <image name="error" width="32" height="32"/>
+        <image name="webcam" width="64" height="64"/>
     </resources>
 </document>

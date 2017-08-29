@@ -1,5 +1,6 @@
 import Cocoa
 import AVFoundation
+import os.log
 
 class ScanController: NSViewController {
 
@@ -11,6 +12,7 @@ class ScanController: NSViewController {
     var qrCodeFrameView:CALayer?
     var isCapturing = false
     let detector: CIDetector = CIDetector(ofType: CIDetectorTypeQRCode, context:nil, options:nil)!
+    let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "capturing")
     
     @IBAction func captureButton(_ sender: Any) {
         if (isCapturing) {
@@ -31,11 +33,9 @@ class ScanController: NSViewController {
         captureSession?.stopRunning()
         videoPreviewLayer?.removeFromSuperlayer()
         isCapturing = false
-        captureButton.title = "Start"
     }
     
     func startCapturing() {
-        captureButton.title = "Stop"
         let captureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
         
         do {
@@ -74,7 +74,7 @@ class ScanController: NSViewController {
                 view.layer?.insertSublayer(qrCodeFrameView, above: videoPreviewLayer)
             }
         } catch {
-            print(error)
+            os_log("error = %@", log: log, type: .error, error.localizedDescription)
             return
         }
 
@@ -105,7 +105,9 @@ extension GiroCode {
         let lines = fromString.components(separatedBy: "\n")
         if let serviceTag = lines[safe: 0], serviceTag == "BCD",  let recipient = lines[safe: 5],
             let iban = lines[safe: 6], let amountStr =   lines[safe: 7] {
-            self.amount = 20.00
+            let index = amountStr.index(amountStr.startIndex, offsetBy: 3)
+            let amount = Double(amountStr.substring(from: index))!
+            self.amount = amount
             self.recipientIban = iban
             self.recipientName = recipient
             self.purpose = ""
@@ -119,7 +121,7 @@ extension GiroCode {
 
 extension Collection where Indices.Iterator.Element == Index {
     
-    /// Returns the element at the specified index iff it is within bounds, otherwise nil.
+    /// Returns the element at the specified index if it is within bounds, otherwise nil.
     subscript (safe index: Index) -> Generator.Element? {
         return indices.contains(index) ? self[index] : nil
     }
@@ -134,16 +136,11 @@ extension ScanController: AVCaptureVideoDataOutputSampleBufferDelegate {
         let features = detector.features(in: ciimg)
         for qrCodeFeature in features as! [CIQRCodeFeature] {
             qrCodeFrameView?.frame = qrCodeFeature.bounds
-            stopCapturing()
-            captureButton.setNextState()
-            //let recipient = (lines.indices.contains(5)) ? lines[5] : "Empfänger"
-            //let iban = (lines.indices.contains(6)) ? lines[6] : "DefaultIBAN"
-            //let amountStr = (lines.indices.contains(7)) ? lines[7] : "Default"
-            //let purpose = (lines.indices.contains(10)) ? lines[10] : ""
-            //let index = amountStr.index(amountStr.startIndex, offsetBy: 3)
-            //let amount = Double(amountStr.substring(from: index))!
-            let giroCode = GiroCode(fromString: qrCodeFeature.messageString!)
-            NotificationCenter.default.post(name: ScanController.notificationName, object: nil, userInfo: ["giroCode": giroCode])
+            if let giroCode = GiroCode(fromString: qrCodeFeature.messageString!) {
+                stopCapturing()
+                captureButton.setNextState()
+                NotificationCenter.default.post(name: ScanController.notificationName, object: nil, userInfo: ["giroCode": giroCode])
+            }
         }
     }
 }
