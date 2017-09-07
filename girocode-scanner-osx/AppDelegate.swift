@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  girocode-scanner-osx
-//
-//  Created by Jan Liße on 27.07.17.
-//  Copyright © 2017 immaterial industries. All rights reserved.
-//
-
 import Cocoa
 
 @NSApplicationMain
@@ -20,7 +12,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
-
-
+    
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        return true
+    }
+    
 }
 

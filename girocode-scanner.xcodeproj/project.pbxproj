@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3D498D6F1F3518B300A11911 /* MoneyMoneyApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D498D6E1F3518B300A11911 /* MoneyMoneyApi.swift */; };
-		3DB1C8641F2BDF2D0066203D /* AccountParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1C8631F2BDF2D0066203D /* AccountParser.swift */; };
+		3D7563081F61F10F00245FF5 /* AccountParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7563071F61F10F00245FF5 /* AccountParser.swift */; };
 		3DC14FDB1F560663001348AD /* success.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3DC14FDA1F560663001348AD /* success.wav */; };
 		3DC14FDD1F5607E3001348AD /* camera.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3DC14FDC1F5607E3001348AD /* camera.wav */; };
 		3DCD961C1F33CDBB00A0D234 /* GiroCodeListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCD961B1F33CDBB00A0D234 /* GiroCodeListController.swift */; };
@@ -20,11 +20,11 @@
 
 /* Begin PBXFileReference section */
 		3D498D6E1F3518B300A11911 /* MoneyMoneyApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoneyMoneyApi.swift; sourceTree = "<group>"; };
-		3DB1C8631F2BDF2D0066203D /* AccountParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountParser.swift; path = ../AccountParser.swift; sourceTree = "<group>"; };
+		3D7563071F61F10F00245FF5 /* AccountParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountParser.swift; sourceTree = "<group>"; };
 		3DC14FDA1F560663001348AD /* success.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = success.wav; sourceTree = "<group>"; };
 		3DC14FDC1F5607E3001348AD /* camera.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = camera.wav; sourceTree = "<group>"; };
 		3DCD961B1F33CDBB00A0D234 /* GiroCodeListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiroCodeListController.swift; sourceTree = "<group>"; };
-		3DF0B7A71F2A053400EC04DD /* girocode-scanner-osx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "girocode-scanner-osx.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3DF0B7A71F2A053400EC04DD /* girocode-scanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "girocode-scanner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DF0B7AA1F2A053500EC04DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3DF0B7AC1F2A053500EC04DD /* ScanController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanController.swift; sourceTree = "<group>"; };
 		3DF0B7AE1F2A053500EC04DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -54,7 +54,7 @@
 		3DF0B7A81F2A053400EC04DD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3DF0B7A71F2A053400EC04DD /* girocode-scanner-osx.app */,
+				3DF0B7A71F2A053400EC04DD /* girocode-scanner.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -64,7 +64,6 @@
 			children = (
 				3DC14FDC1F5607E3001348AD /* camera.wav */,
 				3DC14FDA1F560663001348AD /* success.wav */,
-				3DB1C8631F2BDF2D0066203D /* AccountParser.swift */,
 				3DF0B7AA1F2A053500EC04DD /* AppDelegate.swift */,
 				3DF0B7AC1F2A053500EC04DD /* ScanController.swift */,
 				3DF0B7AE1F2A053500EC04DD /* Assets.xcassets */,
@@ -72,6 +71,7 @@
 				3DF0B7B31F2A053500EC04DD /* Info.plist */,
 				3DCD961B1F33CDBB00A0D234 /* GiroCodeListController.swift */,
 				3D498D6E1F3518B300A11911 /* MoneyMoneyApi.swift */,
+				3D7563071F61F10F00245FF5 /* AccountParser.swift */,
 			);
 			path = "girocode-scanner-osx";
 			sourceTree = "<group>";
@@ -79,9 +79,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3DF0B7A61F2A053400EC04DD /* girocode-scanner-osx */ = {
+		3DF0B7A61F2A053400EC04DD /* girocode-scanner */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3DF0B7B61F2A053500EC04DD /* Build configuration list for PBXNativeTarget "girocode-scanner-osx" */;
+			buildConfigurationList = 3DF0B7B61F2A053500EC04DD /* Build configuration list for PBXNativeTarget "girocode-scanner" */;
 			buildPhases = (
 				3DF0B7A31F2A053400EC04DD /* Sources */,
 				3DF0B7A41F2A053400EC04DD /* Frameworks */,
@@ -91,9 +91,9 @@
 			);
 			dependencies = (
 			);
-			name = "girocode-scanner-osx";
+			name = "girocode-scanner";
 			productName = "girocode-scanner-osx";
-			productReference = 3DF0B7A71F2A053400EC04DD /* girocode-scanner-osx.app */;
+			productReference = 3DF0B7A71F2A053400EC04DD /* girocode-scanner.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -113,7 +113,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3DF0B7A21F2A053400EC04DD /* Build configuration list for PBXProject "girocode-scanner-osx" */;
+			buildConfigurationList = 3DF0B7A21F2A053400EC04DD /* Build configuration list for PBXProject "girocode-scanner" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -126,7 +126,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3DF0B7A61F2A053400EC04DD /* girocode-scanner-osx */,
+				3DF0B7A61F2A053400EC04DD /* girocode-scanner */,
 			);
 		};
 /* End PBXProject section */
@@ -151,8 +151,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D498D6F1F3518B300A11911 /* MoneyMoneyApi.swift in Sources */,
-				3DB1C8641F2BDF2D0066203D /* AccountParser.swift in Sources */,
 				3DCD961C1F33CDBB00A0D234 /* GiroCodeListController.swift in Sources */,
+				3D7563081F61F10F00245FF5 /* AccountParser.swift in Sources */,
 				3DF0B7AD1F2A053500EC04DD /* ScanController.swift in Sources */,
 				3DF0B7AB1F2A053500EC04DD /* AppDelegate.swift in Sources */,
 			);
@@ -272,7 +272,7 @@
 				DEVELOPMENT_TEAM = DA9V9J8JWS;
 				INFOPLIST_FILE = "girocode-scanner-osx/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "immaterial.industries.girocode-scanner-osx";
+				PRODUCT_BUNDLE_IDENTIFIER = "immaterial.industries.girocode-scanner";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -286,7 +286,7 @@
 				DEVELOPMENT_TEAM = DA9V9J8JWS;
 				INFOPLIST_FILE = "girocode-scanner-osx/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "immaterial.industries.girocode-scanner-osx";
+				PRODUCT_BUNDLE_IDENTIFIER = "immaterial.industries.girocode-scanner";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -295,7 +295,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3DF0B7A21F2A053400EC04DD /* Build configuration list for PBXProject "girocode-scanner-osx" */ = {
+		3DF0B7A21F2A053400EC04DD /* Build configuration list for PBXProject "girocode-scanner" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3DF0B7B41F2A053500EC04DD /* Debug */,
@@ -304,7 +304,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3DF0B7B61F2A053500EC04DD /* Build configuration list for PBXNativeTarget "girocode-scanner-osx" */ = {
+		3DF0B7B61F2A053500EC04DD /* Build configuration list for PBXNativeTarget "girocode-scanner" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3DF0B7B71F2A053500EC04DD /* Debug */,
