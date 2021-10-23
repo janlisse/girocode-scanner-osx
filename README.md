@@ -1,4 +1,4 @@
-# MoneyMoney GiroCode :party:
+# MoneyMoney GiroCode
 
 An extension app for [MoneyMoney](https://moneymoney-app.com/app) that is able to scan [Girocodes](https://www.girocode.de) 
 using the primary webcam. The invoice data is sent to MoneyMoney. 
