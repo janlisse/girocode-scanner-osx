@@ -6,17 +6,19 @@ extension String: LocalizedError {
     public var errorDescription: String? { return self }
 }
 
-class ScanController: NSViewController {
-
+class ScanController: NSViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
+    
     static let notificationName = NSNotification.Name(rawValue: "giroCodeNotification")
     
     @IBOutlet weak var captureButton: NSButton!
-    var captureSession:AVCaptureSession?
+    @IBOutlet var output: NSTextField!
+    
+    var session:AVCaptureSession!
+    var queue: DispatchQueue!
+    
     var videoPreviewLayer:AVCaptureVideoPreviewLayer?
-    var qrCodeFrameView:CALayer?
     var isCapturing = false
     let detector: CIDetector = CIDetector(ofType: CIDetectorTypeQRCode, context:nil, options:nil)!
-    let successSound = NSSound(named: "camera")
     let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "capturing")
     
     @IBAction func captureButton(_ sender: Any) {
@@ -35,54 +37,37 @@ class ScanController: NSViewController {
     }
     
     func stopCapturing() {
-        captureSession?.stopRunning()
+        self.session?.stopRunning()
         videoPreviewLayer?.removeFromSuperlayer()
         isCapturing = false
     }
     
     func startCapturing() {
-        do {
-            guard let captureDevice = AVCaptureDevice.default(for: .video) else {throw "No default capture device"}
-            
-            // Get an instance of the AVCaptureDeviceInput class using the previous device object.
-            let input = try AVCaptureDeviceInput(device: captureDevice)
-            
-            // Initialize the captureSession object.
-            captureSession = AVCaptureSession()
-            
-            // Set the input device on the capture session.
-            captureSession?.addInput(input)
-            
-            let captureOutput = AVCaptureVideoDataOutput()
-            captureOutput.alwaysDiscardsLateVideoFrames = true
-            captureSession?.addOutput(captureOutput)
-            
-            captureOutput.setSampleBufferDelegate(self, queue: DispatchQueue.main)
-            
-            // Initialize the video preview layer and add it as a sublayer to the viewPreview view's layer.
-            videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
-            videoPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
-            videoPreviewLayer?.frame = view.bounds
-            view.layer?.insertSublayer(videoPreviewLayer!, at:0)
-            
-            // Start video capture.
-            captureSession?.startRunning()
-            
-            isCapturing = true
-            
-            // Initialize QR Code Frame to highlight the QR code
-            qrCodeFrameView = CALayer()
-            
-            if let qrCodeFrameView = qrCodeFrameView {
-                qrCodeFrameView.borderColor = NSColor.green.cgColor
-                qrCodeFrameView.borderWidth = 4
-                view.layer?.insertSublayer(qrCodeFrameView, above: videoPreviewLayer)
-            }
-        } catch {
-            os_log("error = %@", log: log, type: .error, error.localizedDescription)
-            return
-        }
-
+        
+        self.session = AVCaptureSession()
+        self.session.sessionPreset = .low
+        
+        let device = AVCaptureDevice.default(for: .video)
+        let input = try! AVCaptureDeviceInput(device: device!)
+        
+        self.session.addInput(input)
+        
+        let previewLayer = AVCaptureVideoPreviewLayer(session: session)
+        previewLayer.frame = self.view.bounds
+        previewLayer.videoGravity = .resizeAspectFill
+        
+        self.view.wantsLayer = true
+        self.view.layer?.insertSublayer(previewLayer, at:0)
+        
+        self.queue = DispatchQueue(label: "queue", attributes: .concurrent)
+        
+        let output = AVCaptureVideoDataOutput()
+        output.setSampleBufferDelegate(self, queue: queue)
+        output.alwaysDiscardsLateVideoFrames = true
+        
+        session.addOutput(output)
+        
+        session.startRunning()
     }
     
     override func viewWillAppear() {
@@ -91,7 +76,32 @@ class ScanController: NSViewController {
     
     override var representedObject: Any? {
         didSet {
-        // Update the view, if already loaded.
+            // Update the view, if already loaded.
+        }
+    }
+    
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        // This is called repeatedly at the video frame rate! Be careful not to call api here!
+        
+        let context = CIContext()
+        let detector = CIDetector(ofType: "CIDetectorTypeQRCode", context: context, options: [:])
+        
+        let ciImage = CIImage(cvImageBuffer: CMSampleBufferGetImageBuffer(sampleBuffer)!)
+        
+        if let features = detector?.features(in: ciImage) {
+            guard let feature = features.first as? CIQRCodeFeature else { return }
+            guard let message = feature.messageString else { return }
+            DispatchQueue.main.sync {
+                if let giroCode = GiroCode(fromString: message) {
+                    self.output.stringValue = "Found"
+                    stopCapturing()
+                    captureButton.setNextState()
+                    
+                    NotificationCenter.default.post(name: ScanController.notificationName, object: nil, userInfo: ["giroCode": giroCode])
+                } else {
+                    self.output.stringValue = "Not a valid GiroCode"
+                }
+            }
         }
     }
 }
@@ -108,14 +118,16 @@ struct GiroCode {
 extension GiroCode {
     init?(fromString: String) {
         let lines = fromString.components(separatedBy: "\n")
-        let serviceTag = lines[0]
+        let serviceTag = lines[0].trimmingCharacters(in: .whitespacesAndNewlines)
         let purpose = lines[10]
         let iban = lines[6]
-        if serviceTag == "BCD", let recipient = lines[safe: 5], let amount = GiroCode.parseAmount(s: lines[safe: 7]) {
-            self.amount = amount
-            self.recipientIban = iban
-            self.recipientName = recipient
-            self.purpose = purpose
+        let recipient = lines[safe: 5]
+        let amount = GiroCode.parseAmount(s: lines[safe: 7])
+        if serviceTag == "BCD", recipient != nil, amount != nil  {
+            self.amount = amount!
+            self.recipientIban = iban.trimmingCharacters(in: .whitespacesAndNewlines)
+            self.recipientName = recipient!.trimmingCharacters(in: .whitespacesAndNewlines)
+            self.purpose = purpose.trimmingCharacters(in: .whitespacesAndNewlines)
             self.wasSent = false
         } else {
             return nil
@@ -125,7 +137,7 @@ extension GiroCode {
     static func parseAmount(s: String?) -> Double? {
         if let amountStr = s, amountStr.count > 4 {
             let index = amountStr.index(amountStr.startIndex, offsetBy: 3)
-            return Double(String(amountStr[index...]))
+            return Double(String(amountStr[index...]).trimmingCharacters(in: .whitespacesAndNewlines))
         } else {
             return nil
         }
@@ -139,23 +151,3 @@ extension Collection where Indices.Iterator.Element == Index {
         return indices.contains(index) ? self[index] : nil
     }
 }
-
-
-extension ScanController: AVCaptureVideoDataOutputSampleBufferDelegate {
-    func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection!) {
-        
-        let imageBuf = CMSampleBufferGetImageBuffer(sampleBuffer)!
-        let ciimg: CIImage = CIImage(cvImageBuffer: imageBuf)
-        let features = detector.features(in: ciimg)
-        for qrCodeFeature in features as! [CIQRCodeFeature] {
-            qrCodeFrameView?.frame = qrCodeFeature.bounds
-            if let giroCode = GiroCode(fromString: qrCodeFeature.messageString!) {
-                stopCapturing()
-                captureButton.setNextState()
-                NotificationCenter.default.post(name: ScanController.notificationName, object: nil, userInfo: ["giroCode": giroCode])
-                successSound?.play()
-            }
-        }
-    }
-}
-

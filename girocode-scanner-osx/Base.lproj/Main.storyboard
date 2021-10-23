@@ -804,13 +804,13 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="5fo-gI-b3C" viewBased="YES" id="MUc-nB-dnY">
-                                                    <rect key="frame" x="0.0" y="0.0" width="448" height="78"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="448" height="77"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                     <tableColumns>
-                                                        <tableColumn width="436" minWidth="40" maxWidth="1000" id="S3k-xe-C39">
+                                                        <tableColumn width="407" minWidth="40" maxWidth="1000" id="S3k-xe-C39">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Scanned codes:">
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -823,7 +823,7 @@
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView identifier="ImageTextCell" id="0gk-tR-Paa">
-                                                                    <rect key="frame" x="1" y="1" width="445" height="17"/>
+                                                                    <rect key="frame" x="11" y="1" width="416" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jcx-eZ-EHU">
@@ -832,7 +832,7 @@
                                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSActionTemplate" id="vY2-9S-d3N"/>
                                                                         </imageView>
                                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yvh-Ko-KfJ">
-                                                                            <rect key="frame" x="25" y="0.0" width="420" height="17"/>
+                                                                            <rect key="frame" x="25" y="0.0" width="391" height="17"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="Gxw-Fr-Sf3">
                                                                                 <font key="font" metaFont="system"/>
@@ -915,14 +915,26 @@
                                     <action selector="captureButton:" target="XfG-lQ-9wD" id="NSK-XG-mMW"/>
                                 </connections>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ngp-IN-dgd">
+                                <rect key="frame" x="18" y="20" width="414" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Searching code..." id="8e0-fQ-KLj">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="HGu-vz-hA0" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="7rz-1E-qGj"/>
-                            <constraint firstItem="HGu-vz-hA0" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="BCb-fS-CLu"/>
+                            <constraint firstItem="ngp-IN-dgd" firstAttribute="leading" secondItem="HGu-vz-hA0" secondAttribute="leading" id="GG8-6u-wDz"/>
+                            <constraint firstAttribute="bottom" secondItem="ngp-IN-dgd" secondAttribute="bottom" constant="20" symbolic="YES" id="TYe-1B-eke"/>
+                            <constraint firstAttribute="trailing" secondItem="ngp-IN-dgd" secondAttribute="trailing" constant="20" symbolic="YES" id="UWB-i4-HU7"/>
+                            <constraint firstItem="ngp-IN-dgd" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="n3d-WS-Ryn"/>
+                            <constraint firstItem="HGu-vz-hA0" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" symbolic="YES" id="uOL-Ao-SI9"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="captureButton" destination="HGu-vz-hA0" id="RQo-hM-nd4"/>
+                        <outlet property="output" destination="ngp-IN-dgd" id="hls-kV-zls"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
