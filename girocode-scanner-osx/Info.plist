@@ -28,5 +28,9 @@
 	<string>Main</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSAppleEventsUsageDescription</key>
+	<string>Please give access to MoneyMoney</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Camera is required to capture the QRCode</string>
 </dict>
 </plist>
