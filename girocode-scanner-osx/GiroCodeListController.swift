@@ -7,8 +7,8 @@ import Cocoa
 class GiroCodeListController : NSViewController {
     
     var giroCodes = [GiroCode]()
-    let checkmarkImage = Bundle.main.image(forResource: NSImage.Name(rawValue: "checkmark"))
-    let successSound = NSSound(named: NSSound.Name(rawValue: "success"))
+    let checkmarkImage = Bundle.main.image(forResource: "checkmark")
+    let successSound = NSSound(named: "success")
     
     @IBOutlet weak var splitView: NSSplitView!
     @IBOutlet weak var tableView: NSTableView!

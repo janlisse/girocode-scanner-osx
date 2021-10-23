@@ -16,7 +16,7 @@ class ScanController: NSViewController {
     var qrCodeFrameView:CALayer?
     var isCapturing = false
     let detector: CIDetector = CIDetector(ofType: CIDetectorTypeQRCode, context:nil, options:nil)!
-    let successSound = NSSound(named: NSSound.Name(rawValue: "camera"))
+    let successSound = NSSound(named: "camera")
     let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "capturing")
     
     @IBAction func captureButton(_ sender: Any) {
