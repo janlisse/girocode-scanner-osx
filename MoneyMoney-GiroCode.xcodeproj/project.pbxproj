@@ -46,7 +46,7 @@
 		3DF0B79E1F2A053400EC04DD = {
 			isa = PBXGroup;
 			children = (
-				3DF0B7A91F2A053500EC04DD /* girocode-scanner-osx */,
+				3DF0B7A91F2A053500EC04DD /* money-money-girocode */,
 				3DF0B7A81F2A053400EC04DD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -59,7 +59,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3DF0B7A91F2A053500EC04DD /* girocode-scanner-osx */ = {
+		3DF0B7A91F2A053500EC04DD /* money-money-girocode */ = {
 			isa = PBXGroup;
 			children = (
 				3DC14FDC1F5607E3001348AD /* camera.wav */,
@@ -73,7 +73,7 @@
 				3D498D6E1F3518B300A11911 /* MoneyMoneyApi.swift */,
 				3D7563071F61F10F00245FF5 /* AccountParser.swift */,
 			);
-			path = "girocode-scanner-osx";
+			path = "money-money-girocode";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
