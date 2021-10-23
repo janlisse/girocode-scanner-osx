@@ -7,8 +7,8 @@ import Cocoa
 class GiroCodeListController : NSViewController {
     
     var giroCodes = [GiroCode]()
-    let checkmarkImage = Bundle.main.image(forResource: "checkmark")
-    let successSound = NSSound(named: "success")
+    let checkmarkImage = Bundle.main.image(forResource: NSImage.Name(rawValue: "checkmark"))
+    let successSound = NSSound(named: NSSound.Name(rawValue: "success"))
     
     @IBOutlet weak var splitView: NSSplitView!
     @IBOutlet weak var tableView: NSTableView!
@@ -75,7 +75,7 @@ class GiroCodeListController : NSViewController {
         splitView.adjustSubviews()
     }
     
-    func tableViewDoubleClick(_ sender:AnyObject) {
+    @objc func tableViewDoubleClick(_ sender:AnyObject) {
         if tableView.selectedRow >= 0 {
             let giroCode = giroCodes[tableView.selectedRow]
             if let account = accountSelection.titleOfSelectedItem {
@@ -107,7 +107,7 @@ extension GiroCodeListController: NSTableViewDelegate {
         let code = giroCodes[row]
         let cellIdentifier = CellIdentifiers.NameCell
         
-        if let cell = tableView.make(withIdentifier: cellIdentifier, owner: nil) as? NSTableCellView {
+        if let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: cellIdentifier), owner: nil) as? NSTableCellView {
             cell.textField?.stringValue = "Recipient: \(code.recipientName), Amount: \(code.amount)"
             if (code.wasSent) {
                 cell.imageView?.image = checkmarkImage

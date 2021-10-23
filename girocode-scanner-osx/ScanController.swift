@@ -2,6 +2,10 @@ import Cocoa
 import AVFoundation
 import os.log
 
+extension String: LocalizedError {
+    public var errorDescription: String? { return self }
+}
+
 class ScanController: NSViewController {
 
     static let notificationName = NSNotification.Name(rawValue: "giroCodeNotification")
@@ -12,7 +16,7 @@ class ScanController: NSViewController {
     var qrCodeFrameView:CALayer?
     var isCapturing = false
     let detector: CIDetector = CIDetector(ofType: CIDetectorTypeQRCode, context:nil, options:nil)!
-    let successSound = NSSound(named: "camera")
+    let successSound = NSSound(named: NSSound.Name(rawValue: "camera"))
     let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "capturing")
     
     @IBAction func captureButton(_ sender: Any) {
@@ -37,9 +41,9 @@ class ScanController: NSViewController {
     }
     
     func startCapturing() {
-        let captureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
-        
         do {
+            guard let captureDevice = AVCaptureDevice.default(for: .video) else {throw "No default capture device"}
+            
             // Get an instance of the AVCaptureDeviceInput class using the previous device object.
             let input = try AVCaptureDeviceInput(device: captureDevice)
             
@@ -56,8 +60,8 @@ class ScanController: NSViewController {
             captureOutput.setSampleBufferDelegate(self, queue: DispatchQueue.main)
             
             // Initialize the video preview layer and add it as a sublayer to the viewPreview view's layer.
-            videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-            videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+            videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
+            videoPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
             videoPreviewLayer?.frame = view.bounds
             view.layer?.insertSublayer(videoPreviewLayer!, at:0)
             
@@ -104,9 +108,10 @@ struct GiroCode {
 extension GiroCode {
     init?(fromString: String) {
         let lines = fromString.components(separatedBy: "\n")
-        if let serviceTag = lines[safe: 0], serviceTag == "BCD",  let recipient = lines[safe: 5],
-            let iban = lines[safe: 6], let amount = GiroCode.parseAmount(s: lines[safe: 7]),
-            let purpose = lines[safe: 10] {
+        let serviceTag = lines[0]
+        let purpose = lines[10]
+        let iban = lines[6]
+        if serviceTag == "BCD", let recipient = lines[safe: 5], let amount = GiroCode.parseAmount(s: lines[safe: 7]) {
             self.amount = amount
             self.recipientIban = iban
             self.recipientName = recipient
@@ -118,9 +123,9 @@ extension GiroCode {
     }
     
     static func parseAmount(s: String?) -> Double? {
-        if let amountStr = s, amountStr.characters.count > 4 {
+        if let amountStr = s, amountStr.count > 4 {
             let index = amountStr.index(amountStr.startIndex, offsetBy: 3)
-            return Double(amountStr.substring(from: index))
+            return Double(String(amountStr[index...]))
         } else {
             return nil
         }
@@ -130,7 +135,7 @@ extension GiroCode {
 extension Collection where Indices.Iterator.Element == Index {
     
     /// Returns the element at the specified index if it is within bounds, otherwise nil.
-    subscript (safe index: Index) -> Generator.Element? {
+    subscript (safe index: Index) -> Iterator.Element? {
         return indices.contains(index) ? self[index] : nil
     }
 }
