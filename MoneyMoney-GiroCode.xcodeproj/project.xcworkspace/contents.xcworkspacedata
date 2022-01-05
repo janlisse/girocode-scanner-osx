@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:">
+      location = "self:/Users/d067570/SAPDevelop/privat/girocode-scanner-osx/MoneyMoney-GiroCode.xcodeproj">
    </FileRef>
 </Workspace>
